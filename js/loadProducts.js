@@ -8,7 +8,7 @@ fetch('./json/product-dataset.json')
 let printIt = (data) => {
     try{
         data.forEach(item => {
-            document.getElementById("product-list").innerHTML += `<div class="row" id=${item.uniq_id}> <a href="product.html?id=${item.uniq_id}">${item.product_name}</a>  </div>`;
+            document.getElementById("productList").innerHTML += `<div class="row" id=${item.uniq_id}> <a href="product.html?id=${item.uniq_id}">${item.product_name}</a>  </div>`;
         });
         // document.getElementById("content").innerHTML += "<div>"+
         //     "Hello I am "+item.first_name+" "+item.last_name
