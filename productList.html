@@ -14,8 +14,8 @@
 </head>
 <body>
   <div class="container-fluid d-flex justify-content-around" id="content">
-      <div class="col-12 col-md-2 bg-danger">
-          <div class="card" id="filter">
+      <div class="col-12 col-md-2">
+          <div class="card shadow-5" id="filter">
               <div class="card-body">
                   <form action="">
                       <!-- Sort By -->
@@ -37,6 +37,25 @@
                               <input class="form-check-input" type="radio" name="Order" id="descending" value="1"/>
                               <label class="form-check-label" for="descending"> Descending </label>
                           </div>
+                      </div>
+
+                      <!-- Display category -->
+                      <div class="form-outline mb-4">
+                          <label for="category">Category:</label>
+                          <select class="form-select" id="category" name="categoryList">
+                          </select>
+                      </div>
+
+                      <!-- Display price range -->
+                      <div class="form-outline mb-4">
+                          <label for="price">Price Range:</label>
+                          <select class="form-select" id="price" name="priceRange">
+                              <option value="0">All</option>
+                              <option value="1">$1 - $25</option>
+                              <option value="2">$26 - $50</option>
+                              <option value="3">$51 - $100</option>
+                              <option value="4">$100+</option>
+                          </select>
                       </div>
                   </form>
               </div>

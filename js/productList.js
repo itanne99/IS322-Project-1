@@ -88,6 +88,30 @@ let printIt = (data) => {
     }
 }
 
+let showCategories = async (array) =>{
+    let categoriesList = ["All"]
+    array.forEach((item) => {
+        let category = item.category.split('|')[0];
+        if(category == ""){
+            category = "Misc.";
+        }
+        if(!categoriesList.includes(category)){
+
+            categoriesList.push(category)
+        }
+    });
+
+    categoriesList.sort();
+    categoriesList.forEach((item) => {
+        let category = document.createElement('option');
+        category.value = item;
+        category.innerHTML = item;
+
+        let categoryForm = document.getElementById('category');
+        categoryForm.appendChild(category);
+    });
+}
+
 // End of Front end code
 
 // Back end code
@@ -114,7 +138,6 @@ let fetchJson = async (fileLocation) => {
 let sortByPrice = (array, option) =>{
     switch (option){
         case 0:
-            console.log("sorting asc")
             array.sort((a,b) => {
                 a = parseFloat(a.selling_price);
                 b = parseFloat(b.selling_price);
@@ -122,22 +145,18 @@ let sortByPrice = (array, option) =>{
             });
             break;
         case 1:
-            console.log("sorting dsc")
             array.sort((a, b) => {
                 a = parseFloat(a.selling_price);
                 b = parseFloat(b.selling_price);
                 return (a < b ? 1 : -1);
             });
             break;
-        default:
-            console.log("Error: No option picked")
     }
 }
 
 let sortByTitle = (array, option) =>{
     switch (option){
         case 0:
-            console.log("sorting asc")
             array.sort((a,b) => {
                 a = a.product_name.toLowerCase();
                 b = b.product_name.toLowerCase();
@@ -145,15 +164,12 @@ let sortByTitle = (array, option) =>{
             });
             break;
         case 1:
-            console.log("sorting dsc")
             array.sort((a, b) => {
                 a = a.product_name.toLowerCase();
                 b = b.product_name.toLowerCase();
                 return (a < b ? 1 : -1);
             });
             break;
-        default:
-            console.log("Error: No option picked")
     }
 }
 
@@ -171,6 +187,52 @@ let sortByX = (array, type, order) => {
 
 }
 
+let filterBy = (array, category, price) => {
+    if(category == "Misc."){
+        category="";
+    }
+
+    let priceOne,priceTwo = 0.0;
+    //<option value="1">$1 - $25</option>
+    //                               <option value="2">$26 - $50</option>
+    //                               <option value="3">$51 - $100</option>
+    //                               <option value="4">$100+</option>
+    switch (price){
+        case '0':
+            priceOne = 1.00;
+            priceTwo = Number.MAX_SAFE_INTEGER;
+            break;
+        case '1':
+            priceOne = 1.00;
+            priceTwo = 25.00;
+            break;
+        case '2':
+            priceOne = 26.00;
+            priceTwo = 50.00;
+            break;
+        case '3':
+            priceOne = 51.00;
+            priceTwo = 100.00;
+            break;
+        case '4':
+            priceOne = 100.00;
+            priceTwo = Number.MAX_SAFE_INTEGER;
+            break;
+    };
+
+    let newArray = array.filter((item) => {
+        if(category == "All"){
+            return parseFloat(item.selling_price) >= priceOne &&
+                parseFloat(item.selling_price) <= priceTwo;
+        }
+       return item.category.split('|')[0] == category &&
+           parseFloat(item.selling_price) >= priceOne &&
+           parseFloat(item.selling_price) <= priceTwo;
+    });
+
+    return newArray;
+}
+
 // End of backend code
 
 
@@ -181,28 +243,32 @@ window.onload = async () => {
     } else {
         addMarginTop();
     }
+    //Run First
+    const records = await fetchJson('./json/product-dataset.json');
 
-    console.log("printing json")
-    const records = await fetchJson('./json/product-dataset.json')
-    sortByPrice(records, 0)
-    printIt(records)
+    //Run Middle
+    sortByPrice(records, 0);
+    printIt(records);
+
+    //Run last
+    showCategories(records);
 };
 
-const selectElement = document.getElementById('sort');
 
-selectElement.addEventListener('change', async (event) => {
+//Event Listeners
+const selectSortElement = document.getElementById('sort');
+selectSortElement.addEventListener('change', async (event) => {
     const records = await fetchJson('./json/product-dataset.json');
     const order = parseInt(document.querySelector('input[name="Order"]:checked').value);
     switch (event.target.value){
         case 'price':
             sortByX(records, 'price', order);
-            printIt(records);
             break;
         case 'name':
             sortByX(records, 'name', order);
-            printIt(records);
             break;
     }
+    printIt(filterBy(records,selectCategoryElement.value,selectPriceElement.value))
 });
 
 const radioElement = document.querySelectorAll('input[type=radio][name="Order"]');
@@ -212,14 +278,29 @@ radioElement.forEach(radio => radio.addEventListener('change', async (event) => 
     switch (event.target.value){
         case '0':
             sortByX(records, type, 0)
-            printIt(records)
             break;
         case '1':
             sortByX(records, type, 1)
-            printIt(records)
             break;
-    }
+    };
+    printIt(filterBy(records,selectCategoryElement.value,selectPriceElement.value))
 }))
+
+const selectCategoryElement = document.getElementById('category');
+selectCategoryElement.addEventListener('change', async (event) => {
+    const records = await fetchJson('./json/product-dataset.json');
+    const price = document.getElementById('price').value;
+    sortByX(records, selectCategoryElement.value, radioElement.value);
+    printIt(filterBy(records,event.target.value,price));
+});
+
+const selectPriceElement = document.getElementById('price');
+selectPriceElement.addEventListener('change', async (event) => {
+    const records = await fetchJson('./json/product-dataset.json');
+    const category = document.getElementById('category').value;
+    sortByX(records, selectCategoryElement.value, radioElement.value);
+    printIt(filterBy(records,category,event.target.value))
+});
 
 
 
