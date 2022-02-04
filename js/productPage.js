@@ -7,7 +7,9 @@ fetch('./json/product-dataset.json')
 
 let printIt = (data) => {
     try{
-        let item = data[parseInt(params.id)]
+        let item = data.filter((item) => {
+            return item.uniq_id == params.id
+        })[0];
         //changes title to product name
         document.title = item.product_name;
         //loads the img
