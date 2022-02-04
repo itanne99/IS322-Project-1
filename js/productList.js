@@ -60,6 +60,11 @@ function createProductCard (name, price, category, img, index){
     cardBodyText.innerHTML=`${category}<br>$${price}`;
     cardBody.appendChild(cardBodyText);
 
+    let cardLink = document.createElement('a');
+    cardLink.className = "stretched-link"
+    cardLink.href = `productPage.html?id=${index}`
+    cardBody.appendChild(cardLink)
+
     return cardCol;
 }
 
@@ -76,8 +81,8 @@ let printIt = (data) => {
         cardList.className="row row-cols-1 row-cols-md-4 g-4";
         const mainArea = document.getElementById('productList');
         mainArea.appendChild(cardList);
-        data.forEach((item, index) => {
-            cardList.appendChild(createProductCard(item.product_name, item.selling_price, item.category.split('|')[0], item.image.split('|')[0], index));
+        data.forEach((item) => {
+            cardList.appendChild(createProductCard(item.product_name, item.selling_price, item.category.split('|')[0], item.image.split('|')[0], item.uniq_id));
         });
         // document.getElementById("content").innerHTML += "<div>"+
         //     "Hello I am "+item.first_name+" "+item.last_name
