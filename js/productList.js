@@ -41,7 +41,11 @@ function createProductCard (name, price, category, img, index){
     //         <img src="https://mdbootstrap.com/img/new/standard/nature/111.webp" class="img-fluid" />
     let cardImg = document.createElement('img');
     cardImg.src=img;
-    cardImg.className="card-img-top";
+    if (getWidth() > 576) {
+        cardImg.className="card-img-top";
+    } else{
+        cardImg.className="img-fluid"
+    }
     card.appendChild(cardImg);
 
     //       <div class="card-body">
