@@ -15,7 +15,33 @@
 <body>
   <div class="container-fluid d-flex justify-content-around" id="content">
       <div class="col-12 col-md-2 bg-danger">
-          Filter and sort go here!
+          <div class="card" id="filter">
+              <div class="card-body">
+                  <form action="">
+                      <!-- Sort By -->
+                      <div class="form-outline mb-4">
+                          <label for="sort">Sort By:</label>
+                          <select class="form-select" id="sort" name="sortBy">
+                              <option value="price">Price</option>
+                              <option value="name">Name</option>
+                          </select>
+                      </div>
+                      <!-- Asc or Dsc -->
+                      <!-- Default radio -->
+                      <div class="row">
+                          <div class="col">
+                              <input class="form-check-input" type="radio" name="Order" id="ascending" value="0" checked/>
+                              <label class="form-check-label" for="ascending"> Ascending </label>
+                          </div>
+                          <div class="col">
+                              <input class="form-check-input" type="radio" name="Order" id="descending" value="1"/>
+                              <label class="form-check-label" for="descending"> Descending </label>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+          </div>
+
       </div>
       <div class="col-12 col-md-9" id="productList"></div>
 
