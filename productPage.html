@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/mdb.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-light navbar-light ">
+        <!-- Container wrapper -->
+        <div class="container-fluid">
+
+            <!-- Navbar brand -->
+            <a class="navbar-brand" href="/index.html">E-commerce Site</a>
+
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+                <!-- Link -->
+                <li class="nav-item">
+                    <a class="nav-link active" href="/index.html">Home</a>
+                </li>
+
+                <!-- Link -->
+                <li class="nav-item">
+                    <a class="nav-link active" href="/productList.html">Product List</a>
+                </li>
+
+
+            </ul>
+        </div>
+        <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+
+  <div class="container mt-5">
+      <a href="./productList.html"><-- Go back</a>
+      <div class="row">
+          <div class="col-m-12 col-lg-6 d-flex align-items-center">
+              <img id="productImg" class="img-fluid mx-auto" src="" alt="">
+          </div>
+          <div class="col-m-12 col-lg-6" id="productInfo">
+              <h1 id="productTitle"></h1>
+              <span id="productModelID">Model ID: </span>
+              <p id="productDescription"></p>
+              <h3 id="productPrice"></h3>
+              <button type="button" class="btn btn-primary">Buy Now!</button>
+          </div>
+      </div>
+  </div>
+
+  <script type="text/javascript" src="js/productPage.js"></script>
+
+</body>
+</html>
