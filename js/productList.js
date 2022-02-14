@@ -82,7 +82,7 @@ let printIt = (data) => {
         //document.getElementById("productList").innerHTML += `<div class="row mb-3" id=${getRndInteger(0,data.length)}> <h4><a href="productPage.html?id=${getRndInteger(0,data.length)}">Look Up Random Item</a></h4></div>`
 
         let cardList = document.createElement('div');
-        cardList.className="row row-cols-1 row-cols-md-4 g-4";
+        cardList.className="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4";
         const mainArea = document.getElementById('productList');
         mainArea.appendChild(cardList);
         data.forEach((item) => {
